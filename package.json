@@ -7,7 +7,10 @@
     "declarations": true
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "egg": "^3",
+    "egg-cors": "^2.2.3",
+    "egg-mysql": "^4.0.0",
     "egg-scripts": "^2"
   },
   "devDependencies": {
