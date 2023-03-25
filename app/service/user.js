@@ -18,15 +18,9 @@ class userService extends Service {
       const ctx = this.ctx;
       // eslint-disable-next-line prefer-const
       let userInfo = ctx.request.body;
-      if (!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone || !userInfo.avatar) {
-        const errRes = { code: 0, msg: '用户名信息不合法' };
-        throw errRes;
-      }
-
       const nameRes = await app.mysql.get(
         'user', { username: userInfo.username }
       );
-      console.log(nameRes);
       if (nameRes != null) {
         const errRes = { code: 0, msg: '用户名被占用，请更换其他用户名！' };
         throw errRes;
@@ -43,7 +37,10 @@ class userService extends Service {
             avatar: userInfo.avatar,
           }]
         );
-        return regRes;
+        if (regRes != null) {
+          return { code: 1, msg: '注册成功，请登录' };
+        }
+        throw { code: 0, msg: '注册失败请稍后重试' };
       }
     } catch (err) {
       return err;
