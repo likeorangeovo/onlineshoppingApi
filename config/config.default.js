@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:33:23
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-24 23:42:38
+ * @LastEditTime: 2023-03-26 13:39:39
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -57,6 +57,12 @@ module.exports = appInfo => {
     convert: true, // 对参数可以使用 convertType 规则进行类型转换
     // validateRoot: false,   // 限制被验证值必须是一个对象。
     widelyUndefined: true,
+  };
+  config.session = {
+    key: 'EGG_SESS',
+    maxAge: 604800000,
+    httpOnly: true,
+    encrypt: true,
   };
 
   return {
