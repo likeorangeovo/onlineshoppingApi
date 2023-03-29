@@ -51,6 +51,7 @@ module.exports = appInfo => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true,
   };
   config.validate = {
     // 配置参数校验器，基于parameter

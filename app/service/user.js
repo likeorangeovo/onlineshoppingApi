@@ -33,7 +33,7 @@ class userService extends Service {
             password: userInfo.password,
             phone: userInfo.phone,
             email: userInfo.email,
-            avatar: userInfo.avatar,
+            avatar: 'default.jpg',
           }]
         );
         if (regRes != null) {

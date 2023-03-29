@@ -17,8 +17,6 @@ class userController extends Controller {
       ctx.validate({
         username: 'username',
         password: 'password',
-        phone: 'phone',
-        email: 'email',
       }, ctx.body);
       // 注册用户
       const res = await ctx.service.user.RegisterUser();
