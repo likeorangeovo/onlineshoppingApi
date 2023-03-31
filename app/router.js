@@ -15,4 +15,6 @@ module.exports = app => {
   router.post('/register', controller.user.RegisterUser);
   router.post('/login', controller.user.Login);
   router.get('/logout', controller.user.Logout);
+  router.get('/carousel', controller.mall.Carousel);
+  router.get('/hotgoods', controller.mall.HotGoods);
 };
