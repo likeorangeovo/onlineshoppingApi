@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-30 17:14:00
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-30 17:16:41
+ * @LastEditTime: 2023-03-31 22:02:11
  */
 
 'use strict';
@@ -24,6 +24,15 @@ class mallController extends Controller {
     const { ctx } = this;
     try {
       const res = await ctx.service.mall.HotGoods();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+  async Category() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.mall.Category();
       ctx.body = res;
     } catch (error) {
       return error;

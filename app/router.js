@@ -17,4 +17,5 @@ module.exports = app => {
   router.get('/logout', controller.user.Logout);
   router.get('/carousel', controller.mall.Carousel);
   router.get('/hotgoods', controller.mall.HotGoods);
+  router.get('/category', controller.mall.Category);
 };
