@@ -38,6 +38,15 @@ class mallController extends Controller {
       return error;
     }
   }
+  async CategoryGoods() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.mall.CategoryGoods();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = mallController;

@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-30 17:53:48
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 23:04:47
+ * @LastEditTime: 2023-04-01 15:51:08
  */
 'use strict';
 
@@ -35,6 +35,17 @@ class mallService extends Service {
       const { app } = this;
       const CategoryRes = await app.mysql.query('select id,parent_id,name,level from category where is_show = 1');
       return { code: 1, data: CategoryRes };
+    } catch (error) {
+      return error;
+    }
+  }
+  async CategoryGoods() {
+    try {
+      const { ctx, app } = this;
+      const start = ctx.query.page;
+      const categoryGoodsRes = await app.mysql.query(`select * from goods where category_id = ${ctx.query.id} limit ?,?`, [ (start - 1) * 12, 12 ]);
+      const totalRes = await app.mysql.query(`select count(*) total from goods where category_id = ${ctx.query.id}`);
+      return { code: 1, data: categoryGoodsRes, total: totalRes[0].total };
     } catch (error) {
       return error;
     }

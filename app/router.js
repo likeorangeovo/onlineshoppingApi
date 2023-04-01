@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:33:23
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-24 23:48:50
+ * @LastEditTime: 2023-04-01 15:42:10
  */
 'use strict';
 
@@ -18,4 +18,5 @@ module.exports = app => {
   router.get('/carousel', controller.mall.Carousel);
   router.get('/hotgoods', controller.mall.HotGoods);
   router.get('/category', controller.mall.Category);
+  router.get('/categorygoods', controller.mall.CategoryGoods);
 };
