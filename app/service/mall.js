@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-30 17:53:48
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 15:51:08
+ * @LastEditTime: 2023-04-02 00:00:21
  */
 'use strict';
 
@@ -46,6 +46,15 @@ class mallService extends Service {
       const categoryGoodsRes = await app.mysql.query(`select * from goods where category_id = ${ctx.query.id} limit ?,?`, [ (start - 1) * 12, 12 ]);
       const totalRes = await app.mysql.query(`select count(*) total from goods where category_id = ${ctx.query.id}`);
       return { code: 1, data: categoryGoodsRes, total: totalRes[0].total };
+    } catch (error) {
+      return error;
+    }
+  }
+  async GoodDetail() {
+    try {
+      const { ctx, app } = this;
+      const goodDetailRes = await app.mysql.query(`select * from goods where id = ${ctx.query.id}`);
+      return { code: 1, data: goodDetailRes[0] };
     } catch (error) {
       return error;
     }

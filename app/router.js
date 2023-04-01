@@ -19,4 +19,5 @@ module.exports = app => {
   router.get('/hotgoods', controller.mall.HotGoods);
   router.get('/category', controller.mall.Category);
   router.get('/categorygoods', controller.mall.CategoryGoods);
+  router.get('/gooddetail', controller.mall.GoodDetail);
 };
