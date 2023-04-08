@@ -29,6 +29,42 @@ class transactionController extends Controller {
       return error;
     }
   }
+  async removeCart() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.removeCart();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+  async addOrder() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.addOrder();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+  async getOrder() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.getOrder();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+  async changeStatus() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.changeStatus();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = transactionController;

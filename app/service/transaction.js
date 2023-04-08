@@ -3,11 +3,13 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:43:49
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-05 23:12:14
+ * @LastEditTime: 2023-04-08 17:13:56
  */
 'use strict';
 
 const { Service } = require('egg');
+const SnowflakeID = require('../extend/application');
+const moment = require('moment');
 class transactionService extends Service {
   async addCart() {
     try {
@@ -40,6 +42,69 @@ class transactionService extends Service {
       const { app, ctx } = this;
       const cartInfo = await app.mysql.query('select * from cart where user_id = ? ', [ ctx.session.userInfo.id ]);
       return { code: 1, data: cartInfo };
+    } catch (error) {
+      return error;
+    }
+  }
+  async removeCart() {
+    try {
+      const { app, ctx } = this;
+      const cartInfo = await app.mysql.query('delete from cart where user_id = ? and id = ?', [ ctx.session.userInfo.id, ctx.query.id ]);
+      return { code: 1, data: cartInfo };
+    } catch (error) {
+      return error;
+    }
+  }
+  async addOrder() {
+    try {
+      const { app, ctx } = this;
+      const snid = new SnowflakeID({ mid: +new Date() }).generate();
+      const time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+      const orderInfo = await app.mysql.query('INSERT INTO `order` (`id`, `user_id`, `status`, `total_price`, `create_time`, `pay_time`, `deliver_time`, `receive_time`) VALUES (?, ?, ?, ?, ?, NULL, NULL, NULL);', [
+        snid,
+        ctx.session.userInfo.id,
+        0,
+        Number(ctx.request.body.total_price),
+        time ]);
+      const detailInfo = await app.mysql.query('INSERT INTO `order_detail` (`order_id`, `product_id`, `quantity`, `price`) VALUES (?, ?, ?, ?);',
+        [
+          snid,
+          ctx.request.body.goods_id,
+          ctx.request.body.quantity,
+          ctx.request.body.price,
+        ]);
+      return { code: 1, msg: '下单成功' };
+    } catch (error) {
+      return error;
+    }
+  }
+  async getOrder() {
+    try {
+      const { app, ctx } = this;
+      const data = [];
+      const orderInfo = await app.mysql.query('select * from `order` where user_id = ? ', [ ctx.session.userInfo.id ]);
+      for (const item of orderInfo) {
+        const orderDetailInfo = await app.mysql.query('select * from `order_detail` where order_id = ? ', [ item.id ]);
+        for (const info of orderDetailInfo) {
+          const temp = JSON.parse(JSON.stringify(info));
+          const goodsInfo = await app.mysql.query('select * from `goods` where id = ? ', [ info.product_id ]);
+          temp.name = goodsInfo[0].name;
+          temp.image = goodsInfo[0].list_pic_url;
+          temp.status = item.status;
+          temp.time = moment(item.create_time).format('YYYY-MM-DD');
+          data.push(temp);
+        }
+      }
+      return { code: 1, data };
+    } catch (error) {
+      return error;
+    }
+  }
+  async changeStatus() {
+    try {
+      const { app, ctx } = this;
+      const changeInfo = await app.mysql.query('update `order` set status = ? where user_id = ? and id = ?', [ ctx.query.status, ctx.session.userInfo.id, ctx.query.id ]);
+      return { code: 1, changeInfo };
     } catch (error) {
       return error;
     }

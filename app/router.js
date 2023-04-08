@@ -22,4 +22,8 @@ module.exports = app => {
   router.get('/gooddetail', controller.mall.GoodDetail);
   router.post('/addcart', controller.transaction.addCart);
   router.get('/getcart', controller.transaction.getCart);
+  router.get('/removecart', controller.transaction.removeCart);
+  router.post('/addorder', controller.transaction.addOrder);
+  router.get('/getorder', controller.transaction.getOrder);
+  router.get('/changestatus', controller.transaction.changeStatus);
 };
