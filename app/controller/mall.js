@@ -56,6 +56,15 @@ class mallController extends Controller {
       return error;
     }
   }
+  async SearchGoods() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.mall.SearchGoods();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = mallController;

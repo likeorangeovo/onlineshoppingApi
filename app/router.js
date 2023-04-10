@@ -29,4 +29,5 @@ module.exports = app => {
   router.get('/getuserinfo', controller.user.getUserInfo);
   router.post('/updateuserinfo', controller.user.updateUserInfo);
   router.post('/updatepassword', controller.user.updatePassword);
+  router.get('/searchgoods', controller.mall.SearchGoods);
 };
