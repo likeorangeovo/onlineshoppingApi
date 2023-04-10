@@ -53,6 +53,35 @@ class userController extends Controller {
     }
   }
 
+  async getUserInfo() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.user.getUserInfo();
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  }
+
+  async updateUserInfo() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.user.updateUserInfo();
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  }
+
+  async updatePassword() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.user.updatePassword();
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  }
 }
 
 module.exports = userController;

@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:33:23
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-05 20:46:38
+ * @LastEditTime: 2023-04-10 16:45:51
  */
 'use strict';
 
@@ -26,4 +26,7 @@ module.exports = app => {
   router.post('/addorder', controller.transaction.addOrder);
   router.get('/getorder', controller.transaction.getOrder);
   router.get('/changestatus', controller.transaction.changeStatus);
+  router.get('/getuserinfo', controller.user.getUserInfo);
+  router.post('/updateuserinfo', controller.user.updateUserInfo);
+  router.post('/updatepassword', controller.user.updatePassword);
 };
