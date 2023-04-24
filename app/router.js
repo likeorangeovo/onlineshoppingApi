@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:33:23
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-13 16:28:35
+ * @LastEditTime: 2023-04-21 22:52:51
  */
 'use strict';
 
@@ -32,4 +32,6 @@ module.exports = app => {
   router.get('/searchgoods', controller.mall.SearchGoods);
   router.get('/adminusers', controller.admin.getUserInfo);
   router.get('/admingoods', controller.admin.getGoods);
+  router.post('/upload/avatar', controller.admin.uploadAvatar);
+  router.get('/download/avatar/:filename', controller.admin.download);
 };

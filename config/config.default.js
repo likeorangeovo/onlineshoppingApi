@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:33:23
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-26 13:39:39
+ * @LastEditTime: 2023-04-24 17:35:46
  */
 /* eslint valid-jsdoc: "off" */
 
@@ -12,6 +12,7 @@
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
+const path = require('path');
 module.exports = appInfo => {
   /**
    * built-in config
@@ -28,6 +29,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    uploadAvatarDir: 'D://images/avatar', // 上传头像路径
   };
 
   // 数据库配置
@@ -65,7 +67,14 @@ module.exports = appInfo => {
     httpOnly: true,
     encrypt: true,
   };
-
+  config.multipart = {
+    mode: 'file',
+  };
+  config.static = {
+    prefix: '/static',
+    dir: path.join(appInfo.baseDir, 'app/public'),
+    maxAge: 31536000,
+  };
   return {
     ...config,
     ...userConfig,
