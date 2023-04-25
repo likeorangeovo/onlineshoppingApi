@@ -30,8 +30,11 @@ module.exports = app => {
   router.post('/updateuserinfo', controller.user.updateUserInfo);
   router.post('/updatepassword', controller.user.updatePassword);
   router.get('/searchgoods', controller.mall.SearchGoods);
+
   router.get('/adminusers', controller.admin.getUserInfo);
   router.get('/admingoods', controller.admin.getGoods);
   router.post('/upload/avatar', controller.admin.uploadAvatar);
   router.get('/download/avatar/:filename', controller.admin.download);
+  router.post('/updategood', controller.admin.updateGood);
+  router.post('/addgood', controller.admin.addGood);
 };

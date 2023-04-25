@@ -4,7 +4,7 @@
  * @Author: likeorange
  * @Date: 2023-03-30 17:53:48
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-13 16:36:43
+ * @LastEditTime: 2023-04-25 19:05:23
  */
 'use strict';
 
@@ -38,6 +38,46 @@ class adminService extends Service {
       const goodsInfoRes = await app.mysql.query('select * from goods');
       const res = [];
       return { code: 1, data: goodsInfoRes };
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async updateGood() {
+    const { app, ctx } = this;
+    const params = ctx.request.body;
+    console.log(params);
+    try {
+      const goodsInfoRes = await app.mysql.query(
+        'update `goods` set category_id = ?,name = ?,goods_brief = ?,retail_price = ?,goods_number = ?, sell_volume = ?, primary_pic_url = ?, list_pic_url = ? where id = ?',
+        [ params.category_id, params.name, params.goods_brief, params.retail_price, params.goods_number, params.sell_volume, params.primary_pic_url, params.list_pic_url, params.id ]);
+      if (goodsInfoRes.length != 0) {
+        return { code: 1, msg: '修改成功' };
+      }
+      return { code: 0, msg: '修改失败' };
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async addGood() {
+    const { app, ctx } = this;
+    const params = ctx.request.body;
+    try {
+      const goodsInfoRes = await app.mysql.query(
+        'insert into goods set ?',
+        [{ category_id: params.category_id,
+          name: params.name,
+          goods_brief: params.goods_brief,
+          retail_price: params.retail_price,
+          goods_number: params.goods_number,
+          sell_volume: params.sell_volume,
+          primary_pic_url: params.primary_pic_url,
+          list_pic_url: params.list_pic_url }]);
+      if (goodsInfoRes.length != 0) {
+        return { code: 1, msg: '修改成功' };
+      }
+      return { code: 0, msg: '修改失败' };
     } catch (error) {
       return error;
     }

@@ -35,6 +35,26 @@ class adminController extends Controller {
     }
   }
 
+  async updateGood() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.admin.updateGood();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async addGood() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.admin.addGood();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async uploadAvatar() {
     const { ctx, config } = this;
     try {
