@@ -55,6 +55,26 @@ class adminController extends Controller {
     }
   }
 
+  async getOrder() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.admin.getOrder();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async changeOrder() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.admin.changeOrder();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async uploadAvatar() {
     const { ctx, config } = this;
     try {
@@ -71,14 +91,11 @@ class adminController extends Controller {
       // 4、生成路径返回
       const date = Date.now(); // 毫秒数
       const tempDir = path.join(dir, date + path.extname(file.filename)); // 返回图片保存的路径
-      console.log(tempDir);
-      console.log(fileData);
       // 5、写入文件夹
       try {
         const a = fs.writeFileSync(tempDir, fileData);
-        console.log(a);
       } catch (error) {
-        console.log(error);
+        return error;
       }
       ctx.body = {
         status: 200,
@@ -101,19 +118,15 @@ class adminController extends Controller {
   async download() {
     const { ctx, config } = this;
     const hash = ctx.params.filename;
-    console.log(hash);
     const fullPath = path.join(config.uploadAvatarDir, hash);
-    console.log(fullPath);
 
     // 检查文件是否存在
     const exist = await fs.existsSync(fullPath);
-    console.log(exist);
     if (!exist) {
       ctx.status = 404;
       return;
     }
     const fileContent = fs.readFileSync(fullPath);
-    console.log(fileContent);
     ctx.set('Content-Type', 'image/jpeg');
     ctx.body = fileContent;
   }

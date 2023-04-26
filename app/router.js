@@ -37,4 +37,6 @@ module.exports = app => {
   router.get('/download/avatar/:filename', controller.admin.download);
   router.post('/updategood', controller.admin.updateGood);
   router.post('/addgood', controller.admin.addGood);
+  router.get('/adminorder', controller.admin.getOrder);
+  router.get('/changeorder', controller.admin.changeOrder);
 };

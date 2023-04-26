@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:43:49
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-08 17:13:56
+ * @LastEditTime: 2023-04-25 20:59:13
  */
 'use strict';
 
@@ -83,6 +83,7 @@ class transactionService extends Service {
       const { app, ctx } = this;
       const data = [];
       const orderInfo = await app.mysql.query('select * from `order` where user_id = ? ', [ ctx.session.userInfo.id ]);
+      console.log(orderInfo);
       for (const item of orderInfo) {
         const orderDetailInfo = await app.mysql.query('select * from `order_detail` where order_id = ? ', [ item.id ]);
         for (const info of orderDetailInfo) {
@@ -91,6 +92,7 @@ class transactionService extends Service {
           temp.name = goodsInfo[0].name;
           temp.image = goodsInfo[0].list_pic_url;
           temp.status = item.status;
+          temp.total_price = item.total_price;
           temp.time = moment(item.create_time).format('YYYY-MM-DD');
           data.push(temp);
         }
