@@ -112,7 +112,6 @@ class adminService extends Service {
   async changeOrder() {
     try {
       const { app, ctx } = this;
-      console.log(ctx.query);
       const changeInfo = await app.mysql.query('update `order` set status = ? where id = ?', [ ctx.query.status, ctx.query.id ]);
       return { code: 1, changeInfo };
     } catch (error) {

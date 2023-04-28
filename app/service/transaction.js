@@ -3,13 +3,14 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:43:49
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-25 20:59:13
+ * @LastEditTime: 2023-04-28 21:16:00
  */
 'use strict';
 
 const { Service } = require('egg');
 const SnowflakeID = require('../extend/application');
 const moment = require('moment');
+const { RecommendGoodsService } = require('../extend/recommend.js');
 class transactionService extends Service {
   async addCart() {
     try {
@@ -107,6 +108,28 @@ class transactionService extends Service {
       const { app, ctx } = this;
       const changeInfo = await app.mysql.query('update `order` set status = ? where user_id = ? and id = ?', [ ctx.query.status, ctx.session.userInfo.id, ctx.query.id ]);
       return { code: 1, changeInfo };
+    } catch (error) {
+      return error;
+    }
+  }
+  async recommendGoods() {
+    try {
+      const { app, ctx } = this;
+      const data = [];
+      const orderInfo = await app.mysql.query('select id,user_id from `order`');
+      for (const item of orderInfo) {
+        const orderDetailInfo = await app.mysql.query('select product_id from `order_detail` where order_id = ? ', [ item.id ]);
+        for (const info of orderDetailInfo) {
+          const temp = {};
+          temp.userId = item.user_id;
+          temp.goodsId = info.product_id;
+          data.push(temp);
+        }
+      }
+      const recommendGoodsService = new RecommendGoodsService(data, ctx.session.userInfo.id, 10);
+      const result = recommendGoodsService.start();
+      console.log(result);
+      return { result };
     } catch (error) {
       return error;
     }

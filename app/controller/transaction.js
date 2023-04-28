@@ -65,6 +65,15 @@ class transactionController extends Controller {
       return error;
     }
   }
+  async recommendGoods() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.recommendGoods();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = transactionController;

@@ -39,4 +39,6 @@ module.exports = app => {
   router.post('/addgood', controller.admin.addGood);
   router.get('/adminorder', controller.admin.getOrder);
   router.get('/changeorder', controller.admin.changeOrder);
+
+  router.get('/recommendgoods', controller.transaction.recommendGoods);
 };
