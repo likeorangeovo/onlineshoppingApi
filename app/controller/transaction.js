@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:41:44
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-05 20:51:23
+ * @LastEditTime: 2023-04-29 16:14:28
  */
 
 'use strict';
@@ -69,6 +69,15 @@ class transactionController extends Controller {
     const { ctx } = this;
     try {
       const res = await ctx.service.transaction.recommendGoods();
+      ctx.body = res;
+    } catch (error) {
+      return error;
+    }
+  }
+  async getRecommendGoods() {
+    const { ctx } = this;
+    try {
+      const res = await ctx.service.transaction.getRecommendGoods();
       ctx.body = res;
     } catch (error) {
       return error;

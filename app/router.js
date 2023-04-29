@@ -41,4 +41,5 @@ module.exports = app => {
   router.get('/changeorder', controller.admin.changeOrder);
 
   router.get('/recommendgoods', controller.transaction.recommendGoods);
+  router.get('/getrecommendgoods', controller.transaction.getRecommendGoods);
 };

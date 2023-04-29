@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:43:49
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-28 21:16:00
+ * @LastEditTime: 2023-04-29 16:06:44
  */
 'use strict';
 
@@ -128,8 +128,22 @@ class transactionService extends Service {
       }
       const recommendGoodsService = new RecommendGoodsService(data, ctx.session.userInfo.id, 10);
       const result = recommendGoodsService.start();
-      console.log(result);
-      return { result };
+      // console.log(result);
+      return [ ...result ];
+    } catch (error) {
+      return error;
+    }
+  }
+  async getRecommendGoods() {
+    try {
+      const { app, ctx } = this;
+      const recommendIds = ctx.query;
+      const res = [];
+      for (const item in recommendIds) {
+        const goodsInfo = await app.mysql.query('select * from `goods` where id = ?', [ recommendIds[item] ]);
+        res.push(goodsInfo[0]);
+      }
+      return { code: 1, data: res };
     } catch (error) {
       return error;
     }
