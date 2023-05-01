@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-05 17:43:49
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-29 16:06:44
+ * @LastEditTime: 2023-05-01 00:07:31
  */
 'use strict';
 
@@ -84,7 +84,6 @@ class transactionService extends Service {
       const { app, ctx } = this;
       const data = [];
       const orderInfo = await app.mysql.query('select * from `order` where user_id = ? ', [ ctx.session.userInfo.id ]);
-      console.log(orderInfo);
       for (const item of orderInfo) {
         const orderDetailInfo = await app.mysql.query('select * from `order_detail` where order_id = ? ', [ item.id ]);
         for (const info of orderDetailInfo) {
@@ -128,7 +127,6 @@ class transactionService extends Service {
       }
       const recommendGoodsService = new RecommendGoodsService(data, ctx.session.userInfo.id, 10);
       const result = recommendGoodsService.start();
-      // console.log(result);
       return [ ...result ];
     } catch (error) {
       return error;
