@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-24 16:53:13
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-10 20:25:42
+ * @LastEditTime: 2023-05-25 16:08:05
  */
 
 'user strict';
@@ -134,7 +134,7 @@ class userService extends Service {
       const pwdInfo = ctx.request.body;
       pwdInfo.password = ctx.helper.encrypt(pwdInfo.password);
       const pwdRes = await app.mysql.query(
-        'update user set ?', [{ password: pwdInfo.password }]
+        'update user set password = ? where id = ?', [ pwdInfo.password, ctx.session.userInfo.id ]
       );
       if (pwdRes != null) {
         return { code: 1, msg: '修改成功' };
